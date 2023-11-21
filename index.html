@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Alarm</title>
+</head>
+<body>
+    <h1>Custom Alarm</h1>
+    
+    <label for="alarmTime">Set Alarm Time:</label>
+    <input type="time" id="alarmTime">
+
+    <label for="customSound">Upload Custom MP3:</label>
+    <input type="file" id="customSound" accept=".mp3">
+
+    <button onclick="setAlarm()">Set Alarm</button>
+
+    <script>
+        function setAlarm() {
+            // Get user input values
+            var alarmTime = document.getElementById("alarmTime").value;
+            var customSound = document.getElementById("customSound").value;
+
+            // Validate input
+            if (alarmTime === "") {
+                alert("Please set a valid alarm time.");
+                return;
+            }
+
+            // Convert time to milliseconds
+            var alarmTimeMillis = new Date().setHours(alarmTime.split(":")[0], alarmTime.split(":")[1], 0, 0);
+
+            // Get current time in milliseconds
+            var currentTimeMillis = new Date().getTime();
+
+            // Calculate time difference
+            var timeDiff = alarmTimeMillis - currentTimeMillis;
+
+            if (timeDiff <= 0) {
+                alert("Please set a future time for the alarm.");
+                return;
+            }
+
+            // Set timeout to trigger the alarm
+            setTimeout(function () {
+                alert("Wake up! Time to get up!");
+                // Here you can add code to play a sound, but it won't work with custom MP3 due to security restrictions.
+            }, timeDiff);
+        }
+    </script>
+</body>
+</html>
